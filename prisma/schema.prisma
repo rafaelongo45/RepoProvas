@@ -22,8 +22,8 @@ model Users {
 
 model Sessions {
   id                  Int @id @default(autoincrement())
-  token               String
-  isValid             Boolean
+  token               String @unique
+  isValid             Boolean @default(true)
   userId              Int
   createdAt           DateTime @default(now())
 
