@@ -38,7 +38,7 @@ async function findByNameAndTeacherDiscId(name: string, teacherDisciplineId: num
   });
 
   return test;
-}
+};
 
 async function insert(data: CreateTest){
   await prisma.tests.create({
@@ -46,11 +46,48 @@ async function insert(data: CreateTest){
   });
 };
 
+async function findAllTests(){
+  const tests = await prisma.tests.findMany({
+    select:{
+      id: true,
+      name: true,
+      pdfUrl:true,
+      category: {
+        select:{
+          name:true
+        }
+      },
+      teacherDiscipline: {
+        select:{
+          teacher: {
+            select:{
+              name: true
+            }
+          },
+          discipline: {
+            select:{
+              name: true,
+              term: {
+                select: {
+                  number: true
+                }
+              }
+            }
+          }
+        }
+      },
+    }
+  });
+
+  return tests;
+}
+
 const testsRepository = {
   insert,
   findByName,
   findBypdfUrl,
-  findByNameAndTeacherDiscId
+  findByNameAndTeacherDiscId,
+  findAllTests
 };
 
 export default testsRepository;

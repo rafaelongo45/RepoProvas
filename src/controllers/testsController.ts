@@ -15,3 +15,8 @@ export async function createTest(req: Request, res: Response){
   await testsService.insertTest(body);
   return res.sendStatus(201);
 };
+
+export async function getAllTests(req: Request, res: Response){
+  const tests = await testsService.findTests();
+  return res.status(200).send(tests);
+}

@@ -6,6 +6,7 @@ import categoriesRepository from "../repositories/categoriesRepository.js";
 import disciplinesRepository from "../repositories/disciplinesRepository.js";
 import testsRepository, { CreateTest } from "../repositories/testsRepository.js";
 import teacherDisciplineRepository from "../repositories/teacherDisciplineRepository.js";
+import { structureTests } from "../utils/testStructurer.js";
 
 async function checkDiscipline(name: string){
   const discipline = await disciplinesRepository.findByName(name);
@@ -80,8 +81,15 @@ async function insertTest(body: TestBody){
   await testsRepository.insert(data)
 };
 
+async function findTests(){
+  const tests = await testsRepository.findAllTests();
+  const structuredTests = structureTests(tests)
+  return structuredTests;
+}
+
 const testsService = {
-  insertTest
+  insertTest,
+  findTests
 };
 
 export default testsService;
