@@ -80,13 +80,14 @@ model teachersDisciplines {
 
 model Tests {
   id                    Int @id @default(autoincrement())
-  name                  String @unique
+  name                  String
   pdfUrl                String @unique
   categoryId            Int
   teacherDisciplineId   Int
   category              Categories @relation(fields: [categoryId], references: [id])
   teacherDiscipline     teachersDisciplines @relation(fields: [teacherDisciplineId], references: [id])
-  createdAt           DateTime @default(now())
+  createdAt             DateTime @default(now())
 
   @@map("tests")
+  @@unique([name, teacherDisciplineId])
 }

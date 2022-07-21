@@ -24,7 +24,7 @@ async function validateSession(token: string){
   }
 
   if(!session.isValid){
-    throw { type: "expiredError", message: "Token is not valid anymore. Create a new session!", code: 403}
+    throw { type: "expiredError", message: "Session is not valid anymore. Create a new one", code: 403}
   }
 
   return session;
