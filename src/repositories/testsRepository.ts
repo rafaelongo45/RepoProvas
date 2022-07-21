@@ -28,6 +28,16 @@ async function findBypdfUrl(pdfUrl: string){
   });
 
   return test;
+};
+
+async function findByNameAndTeacherDiscId(name: string, teacherDisciplineId: number) {
+  const test = await prisma.tests.findFirst({
+    where:{
+      name, teacherDisciplineId
+    }
+  });
+
+  return test;
 }
 
 async function insert(data: CreateTest){
@@ -39,7 +49,8 @@ async function insert(data: CreateTest){
 const testsRepository = {
   insert,
   findByName,
-  findBypdfUrl
+  findBypdfUrl,
+  findByNameAndTeacherDiscId
 };
 
 export default testsRepository;

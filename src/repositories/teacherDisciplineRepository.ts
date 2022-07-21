@@ -16,7 +16,7 @@ async function findIdByDisciplineNameAndTeacherName(discipline: string, teacher:
     }
   });
 
-  return disciplineTeacher.id;
+  return disciplineTeacher;
 };
 
 async function findById(id: number){

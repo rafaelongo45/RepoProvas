@@ -1,3 +1,5 @@
+import { teachersDisciplines } from "@prisma/client";
+
 import { TestBody } from "../controllers/testsController.js";
 import teachersRepository from "../repositories/teacherRepository.js";
 import categoriesRepository from "../repositories/categoriesRepository.js";
@@ -10,7 +12,9 @@ async function checkDiscipline(name: string){
 
   if(!discipline){
     throw { type: "disciplineError", message: "Discipline doesn't exist", code: 404 }
-  }
+  };
+
+  return discipline;
 };
 
 async function checkProfessor(name: string) {
@@ -18,7 +22,9 @@ async function checkProfessor(name: string) {
 
   if(!teacher){
     throw { type: "teacherError", message: "Teacher doesn't exist", code: 404 }
-  }
+  };
+
+  return teacher;
 };
 
 async function checkCategory(name: string){
@@ -31,31 +37,45 @@ async function checkCategory(name: string){
   return category.id
 };
 
-async function checkNameAndUrl(name: string, pdf: string){
-  const testName = await testsRepository.findByName(name);
-
-  if(testName){
-    throw { type: "testNameError", message: "Test with this name already exists", code: 409 }
-  };
-
+async function checkUrl(pdf: string){
   const testPdf = await testsRepository.findBypdfUrl(pdf);
 
   if(testPdf){
     throw { type: "testPDFError", message: "Test with this pdf url already exists", code: 409 }
   };
+};
+
+async function checkTeacherDiscName(teachDiscId: number, name: string){
+  const test = await testsRepository.findByNameAndTeacherDiscId(name, teachDiscId);
+  
+  if(test){
+    const validName = test.teacherDisciplineId !== teachDiscId && test.name === name || test.teacherDisciplineId === teachDiscId && test.name !== name;
+    if(!validName){
+      throw { type: "nameError", message: "This name is already in use in this discipline for this teacher", code: 409};
+    }
+  }
+};
+
+async function checkTeacherTeachesDiscipline(teachDisc: teachersDisciplines){
+  if(!teachDisc){
+    throw { type: "teacherDisciplineError", message: "This teacher doesn't teach this discipline", code: 400 };
+  }
 }
 
 async function insertTest(body: TestBody){
   await checkDiscipline(body.discipline);
   await checkProfessor(body.professor);
-  await checkNameAndUrl(body.name, body.pdfLink);
+  await checkUrl(body.pdfLink);
   const categoryId = await checkCategory(body.category);
-  const discTeacherId = await teacherDisciplineRepository.findIdByDisciplineNameAndTeacherName(body.discipline, body.professor);
+  const discTeacher = await teacherDisciplineRepository.findIdByDisciplineNameAndTeacherName(body.discipline, body.professor);
+  await checkTeacherTeachesDiscipline(discTeacher);
+  await checkTeacherDiscName(discTeacher.id, body.name);
+
   const data : CreateTest = {
     name: body.name,
     pdfUrl: body.pdfLink,
     categoryId,
-    teacherDisciplineId: discTeacherId
+    teacherDisciplineId: discTeacher.id
   }
   await testsRepository.insert(data)
 };
