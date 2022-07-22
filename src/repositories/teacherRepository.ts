@@ -10,8 +10,30 @@ async function findByName(name: string){
   return professor;
 };
 
+async function findAll(){
+  const teacherWithDisc = await prisma.teachers.findMany({
+    select:{
+      id: true,
+      name: true,
+      teacherDiscipline: {
+        select:{
+          discipline:{
+            select:{
+              id:true,
+              name:true,
+            }
+          }
+        }
+      }
+    }
+  });
+
+  return teacherWithDisc;
+}
+
 const teachersRepository = {
-  findByName
+  findByName,
+  findAll
 };
 
 export default teachersRepository;

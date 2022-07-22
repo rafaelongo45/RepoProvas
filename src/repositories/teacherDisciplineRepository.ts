@@ -27,7 +27,7 @@ async function findById(id: number){
   });
 
   return discTeacher;
-}
+};
 
 const teacherDisciplineRepository = {
   findIdByDisciplineNameAndTeacherName,
