@@ -52,26 +52,24 @@ async function findAllTests(){
       id: true,
       name: true,
       pdfUrl:true,
-      category: {
+      category:{
         select:{
+          id:true,
           name:true
         }
       },
       teacherDiscipline: {
         select:{
-          teacher: {
+          teacher:{
             select:{
+              id:true,
               name: true
             }
           },
-          discipline: {
+          discipline:{
             select:{
-              name: true,
-              term: {
-                select: {
-                  number: true
-                }
-              }
+              id:true,
+              name:true
             }
           }
         }

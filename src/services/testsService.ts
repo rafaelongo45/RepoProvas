@@ -83,13 +83,18 @@ async function insertTest(body: TestBody){
 
 async function findTests(){
   const tests = await testsRepository.findAllTests();
-  const structuredTests = structureTests(tests)
-  return structuredTests;
+  return tests;
+}
+
+async function findTestsCategories(){
+  const categories = await categoriesRepository.findAll();
+  return {categories: categories};
 }
 
 const testsService = {
   insertTest,
-  findTests
+  findTests,
+  findTestsCategories
 };
 
 export default testsService;

@@ -10,8 +10,19 @@ async function findByName(name: string){
   return category;
 };
 
+async function findAll(){
+  const categories = await prisma.categories.findMany({
+    select:{
+      id: true,
+      name: true
+    }
+  });
+  return categories
+}
+
 const categoriesRepository = {
-  findByName
+  findByName,
+  findAll
 };
 
 export default categoriesRepository;
