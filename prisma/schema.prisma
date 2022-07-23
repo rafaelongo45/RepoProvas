@@ -28,6 +28,7 @@ model Sessions {
   createdAt           DateTime @default(now())
 
   users               Users @relation(fields: [userId], references: [id])
+  @@map("sessions")
 }
 
 model Disciplines {
