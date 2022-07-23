@@ -4,14 +4,14 @@
   "description": "",
   "main": "index.js",
   "type": "module",
+  "prisma": {
+    "seed": "ts-node ./prisma/seed.ts"
+  },
   "scripts": {
     "dev": "nodemon ./src/app.ts",
     "build": "tsc",
     "start": "node ./dist/app.js",
     "test": "dotenv -e .env.test prisma db seed && NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -i"
-  },
-  "prisma": {
-    "seed": "ts-node ./prisma/seed.ts"
   },
   "keywords": [],
   "author": "",
