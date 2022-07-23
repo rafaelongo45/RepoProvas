@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "prepare": "npx prisma generate",
+    "prepare": "npx prisma migrate deploy",
     "start": "node ./dist/src/app.js",
     "dev": "nodemon ./src/app.ts",
     "test": "dotenv -e .env.test prisma db seed && NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -i"
