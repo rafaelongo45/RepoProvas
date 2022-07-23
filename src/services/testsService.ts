@@ -6,13 +6,12 @@ import categoriesRepository from "../repositories/categoriesRepository.js";
 import disciplinesRepository from "../repositories/disciplinesRepository.js";
 import testsRepository, { CreateTest } from "../repositories/testsRepository.js";
 import teacherDisciplineRepository from "../repositories/teacherDisciplineRepository.js";
-import { structureTests } from "../utils/testStructurer.js";
 
 async function checkDiscipline(name: string){
   const discipline = await disciplinesRepository.findByName(name);
 
   if(!discipline){
-    throw { type: "disciplineError", message: "Discipline doesn't exist", code: 404 }
+    throw { type: "disciplineError", message: "Discipline doesn't exist", code: 403 }
   };
 
   return discipline;
@@ -22,7 +21,7 @@ async function checkProfessor(name: string) {
   const teacher = await teachersRepository.findByName(name);
 
   if(!teacher){
-    throw { type: "teacherError", message: "Teacher doesn't exist", code: 404 }
+    throw { type: "teacherError", message: "Teacher doesn't exist", code: 403 }
   };
 
   return teacher;

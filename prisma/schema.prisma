@@ -76,6 +76,8 @@ model teachersDisciplines {
   teacher             Teachers @relation(fields: [teacherId], references: [id])
   discipline          Disciplines @relation(fields: [disciplineId], references: [id])
   createdAt           DateTime @default(now())
+
+  @@unique([teacherId, disciplineId])
 }
 
 model Tests {
