@@ -8,8 +8,8 @@ import { createUser, login, logout } from "../controllers/authController.js";
 
 const authRouter = Router();
 
-authRouter.post("/sign-up", validateSchema(signupSchema), createUser);
-authRouter.post("/sign-in", validateSchema(signinSchema), login);
-authRouter.post("/sign-out", validateToken, logout)
+authRouter.post("/signup", validateSchema(signupSchema), createUser);
+authRouter.post("/signin", validateSchema(signinSchema), login);
+authRouter.post("/signout", validateToken, logout)
 
 export default authRouter;
