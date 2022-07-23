@@ -4,6 +4,6 @@ export default async function handleError(error, req: Request, res: Response, ne
   if(error.type){
     return res.status(error.code).send(error.message);
   }
-
+  console.log(error)
   return res.sendStatus(500);
 }

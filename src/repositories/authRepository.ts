@@ -39,23 +39,11 @@ async function findSession(token: string){
   return session;
 };
 
-async function invalidateSession(token: string){
-  await prisma.sessions.update({
-    where: {
-      token
-    },
-    data: {
-      isValid: false
-    }
-  });
-};
-
 const authRepository = {
   insert,
   findByEmail,
   insertSession,
   findSession,
-  invalidateSession
 };
 
 export default authRepository;

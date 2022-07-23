@@ -2,66 +2,97 @@ import prisma from "../src/config/database.js";
 
 async function main(){
   //create terms
-  const termsData = [
-    { number: 1 },
-    { number: 1 },
-    { number: 1 },
-    { number: 1 },
-    { number: 1 },
-    { number: 1 }
-  ];
-
-  termsData.forEach(async (term) => {
-    await prisma.terms.upsert({
-      where: { number: term.number },
-      update: {},
-      create: { number: term.number }
-    })
+  await prisma.terms.upsert({
+    where: { number: 1 },
+    update: {},
+    create: { number: 1 }
   })
+  await prisma.terms.upsert({
+    where: { number: 2 },
+    update: {},
+    create: { number: 2 }
+  })
+  await prisma.terms.upsert({
+    where: { number: 3 },
+    update: {},
+    create: { number: 3 }
+  })
+  await prisma.terms.upsert({
+    where: { number: 4 },
+    update: {},
+    create: { number: 4 }
+  })
+  await prisma.terms.upsert({
+    where: { number: 5 },
+    update: {},
+    create: { number: 5 }
+  })
+  await prisma.terms.upsert({
+    where: { number: 6 },
+    update: {},
+    create: { number: 6 }
+})
   
   //create categories
-  const categoriesData = [
-    { name: 'Projeto'},
-    { name: 'Prática'},
-    { name: 'Recuperação'},
-  ]
-  categoriesData.forEach(async (category) => {
-    await prisma.categories.upsert({
-      where: { name: category.name },
-      update: {},
-      create: { name: category.name }
-    })
+  await prisma.categories.upsert({
+    where: { name: 'Projeto' },
+    update: {},
+    create: { name: 'Projeto' }
+  })
+  await prisma.categories.upsert({
+    where: { name: 'Prática' },
+    update: {},
+    create: { name: 'Prática' }
+  })
+  await prisma.categories.upsert({
+    where: { name: 'Recuperação' },
+    update: {},
+    create: { name: 'Recuperação' }
   })
 
   //create teachers
-  const teachersData = [
-    { name: 'Diego Pinho'},
-    { name: 'Bruna Hamori'}
-  ]
-  teachersData.forEach(async (teacher) => {
-    await prisma.teachers.upsert({
-      where: { name: teacher.name },
-      update: {},
-      create: { name: teacher.name }
-    })
+  await prisma.teachers.upsert({
+    where: { name: 'Diego Pinho' },
+    update: {},
+    create: { name: 'Diego Pinho' }
+  })
+  await prisma.teachers.upsert({
+    where: { name: 'Bruna Hamori' },
+    update: {},
+    create: { name: 'Bruna Hamori' }
   })
 
   //create disciplines
-  const disciplinesData = [
-    {name: 'HTML e CSS', termId: 1},
-    {name: 'JavaScript', termId: 2},
-    {name: 'React', termId: 3},
-    {name: 'Humildade', termId: 1},
-    {name: 'Planejamento', termId: 2},
-    {name: 'Autoconfiança', termId: 3}
-  ]
-  disciplinesData.forEach(async (discipline) => {
     await prisma.disciplines.upsert({
-      where: { name: discipline.name },
+      where: { name: 'HTML e CSS' },
       update: {},
-      create: { name: discipline.name, termId: discipline.termId }
+      create: { name: 'HTML e CSS', termId: 1 }
     })
-  })
+    await prisma.disciplines.upsert({
+      where: { name: 'JavaScript' },
+      update: {},
+      create: { name: 'JavaScript', termId: 2 }
+    })
+    await prisma.disciplines.upsert({
+      where: { name: 'React' },
+      update: {},
+      create: { name: 'React', termId: 3 }
+    })
+    await prisma.disciplines.upsert({
+      where: { name: 'Humildade' },
+      update: {},
+      create: { name: 'Humildade', termId: 1 }
+    })
+    await prisma.disciplines.upsert({
+      where: { name: 'Planejamento' },
+      update: {},
+      create: { name: 'Planejamento', termId: 2 }
+    })
+    await prisma.disciplines.upsert({
+      where: { name: 'Autoconfiança' },
+      update: {},
+      create: { name: 'Autoconfiança', termId: 3 }
+    })
   
   //create teachersDisciplines
   const teachersDisciplinesData = [
@@ -72,16 +103,54 @@ async function main(){
     { teacherId: 2, disciplineId: 5},
     { teacherId: 2, disciplineId: 6},
   ]
-  teachersDisciplinesData.forEach(async (teacherDiscipline) => {
     await prisma.teachersDisciplines.upsert({
       where: { teacherId_disciplineId: {
-        teacherId: teacherDiscipline.teacherId,
-        disciplineId: teacherDiscipline.disciplineId
+        teacherId: 1,
+        disciplineId: 1
       } },
       update: {},
-      create: { teacherId: teacherDiscipline.teacherId, disciplineId: teacherDiscipline.teacherId }
+      create: { teacherId: 1, disciplineId: 1 }
     })
-  })
+    await prisma.teachersDisciplines.upsert({
+      where: { teacherId_disciplineId: {
+        teacherId: 1,
+        disciplineId: 2
+      } },
+      update: {},
+      create: { teacherId: 1, disciplineId: 2 }
+    })
+    await prisma.teachersDisciplines.upsert({
+      where: { teacherId_disciplineId: {
+        teacherId: 1,
+        disciplineId: 3
+      } },
+      update: {},
+      create: { teacherId: 1, disciplineId: 3 }
+    })
+    await prisma.teachersDisciplines.upsert({
+      where: { teacherId_disciplineId: {
+        teacherId: 2,
+        disciplineId: 4
+      } },
+      update: {},
+      create: { teacherId: 2, disciplineId: 4 }
+    })
+    await prisma.teachersDisciplines.upsert({
+      where: { teacherId_disciplineId: {
+        teacherId: 2,
+        disciplineId: 5
+      } },
+      update: {},
+      create: { teacherId: 2, disciplineId: 5 }
+    })
+    await prisma.teachersDisciplines.upsert({
+      where: { teacherId_disciplineId: {
+        teacherId: 2,
+        disciplineId: 6
+      } },
+      update: {},
+      create: { teacherId: 2, disciplineId: 6 }
+    })
 }
 
 main().catch(e => {

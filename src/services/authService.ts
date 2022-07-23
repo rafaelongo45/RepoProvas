@@ -1,9 +1,13 @@
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 import { Users } from "@prisma/client";
 
 import isPasswordCorrect from "../utils/checkPassword.js";
 import authRepository from "../repositories/authRepository.js";
 import encryptPassword from "../utils/encryptSignupPassword.js";
-import generateJWTToken from "../utils/generateToken.js";
+
+dotenv.config();
+
 
 async function verifyUser(email: string, password: string){
   const user = await authRepository.findByEmail(email);
@@ -37,19 +41,14 @@ async function insertUser(body: Users){
 
 async function loginUser(body: Users){
   const user = await verifyUser(body.email, body.password);
-  const token = await generateJWTToken(body);
+  const token = jwt.sign({user: user.email}, process.env.JWT_KEY);
   await authRepository.insertSession(token, user.id);
   return { token };
 }
 
-async function logoutUser(token: string){
-  await authRepository.invalidateSession(token);
-}
-
 const authService = {
   insertUser,
-  loginUser,
-  logoutUser
+  loginUser
 };
 
 export default authService;

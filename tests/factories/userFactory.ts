@@ -26,10 +26,10 @@ async function createSession(){
   const token = 'token_totalmente_aleatorio'
   const session = await prisma.sessions.create({
     data:{
-      userId: user.id,
-      token
+      token: token,
+      userId: user.id
     }
-  });
+  })
   return session;
 }
 
