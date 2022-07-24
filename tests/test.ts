@@ -289,3 +289,22 @@ describe("find all teachers with disciplines suite", () => {
     expect(result.status).toBe(200)
   });
 })
+
+describe("find all categories suite", () => {
+  it("tries to find categories without sending a token, fails and receives code 403", async () => {
+    const result = await supertest(app).get("/categories");
+    expect(result.status).toBe(403)
+  });
+
+  it("tries to find categories an invalid token, fails and receives code 404", async () => {
+    const session = await userFactory.createSession();
+    const result = await supertest(app).get("/categories").auth(session.token + 'invalid', {type: 'bearer'});
+    expect(result.status).toBe(404)
+  });
+
+  it("tries to find categories sending a valid token, succeeds and receives code 200", async () => {
+    const session = await userFactory.createSession(); 
+    const result = await supertest(app).get("/categories").auth(session.token, {type: 'bearer'});
+    expect(result.status).toBe(200)
+  });
+})
